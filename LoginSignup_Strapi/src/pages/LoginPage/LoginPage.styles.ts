@@ -31,4 +31,9 @@ export default StyleSheet.create({
     textAlign: 'center',
     color: Colors.Grey,
   },
+  errorText: {
+    ...Fonts.normal,
+    color: Colors.Red,
+    margin: 16,
+  },
 });

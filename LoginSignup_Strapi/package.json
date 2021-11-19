@@ -12,6 +12,8 @@
   "dependencies": {
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
+    "axios": "^0.24.0",
+    "formik": "^2.2.9",
     "react": "17.0.2",
     "react-native": "0.66.3",
     "react-native-config": "^1.4.5",
@@ -19,7 +21,8 @@
     "react-native-mmkv": "^1.5.3",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.9.0",
-    "react-query": "^3.32.3"
+    "react-query": "^3.32.3",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

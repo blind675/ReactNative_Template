@@ -7,20 +7,38 @@ import {Storage} from '../../services/storage';
 import Styles from './LoadingPage.styles';
 import {MainPagesParams, PagesTypes} from '../../types/routes';
 import {Colors} from '../../styles';
+import {useQuery} from 'react-query';
+import apiCalls from '../../services/api';
 
 export default function LoadingPage() {
   const navigation = useNavigation<NativeStackNavigationProp<MainPagesParams, PagesTypes.Loading>>();
 
+  const {
+    isFetched: userDataFetched,
+    data: user,
+    error: userError,
+  } = useQuery('user', apiCalls.queries.getUser, {retry: false});
+
+  // TODO: Do another query that depends on the users success response
+  // // Then get the user's projects
+  // const {data, error} = useQuery('someOtherData', otherQuery, {
+  //   // The query will not execute until the userId exists
+  //   enabled: !!user,
+  // });
+
   useEffect(() => {
-    if (Storage.isTokenSet) {
-      //TODO: fetch data from server
-      navigation.navigate(PagesTypes.Home);
-    } else {
-      setTimeout(() => {
+    if (userDataFetched) {
+      // If there is an error with the user query
+      // there is either no token, or an expired one
+      if (userError) {
+        // clear storage just to be sure
+        Storage.clear();
         navigation.navigate(PagesTypes.Login);
-      }, 2000);
+      } else {
+        navigation.navigate(PagesTypes.Home);
+      }
     }
-  }, [navigation]);
+  }, [navigation, userError, userDataFetched]);
 
   return (
     <View style={Styles.pageContainer}>
